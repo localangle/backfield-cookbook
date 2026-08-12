@@ -9,8 +9,18 @@ This repo is a set of marimo tutorials that call the Backfield public API. It is
 - Teaching cells use `@app.cell(hide_code=True)` and `mo.md(...)`.
 - Code cells stay short and runnable.
 - End each notebook with a “Next steps” cell that links to the following tutorial.
+- Link concepts, endpoints, parameters, and conventions to the most specific relevant page on `docs.backfield.news` wherever possible.
 
 Do not invent endpoints, query parameters, or response fields. The contract is `/public/v1` as documented at https://docs.backfield.news and served from `{BASE_URL}/public/v1/openapi.json`.
+
+## Writing style
+
+- Write for a reasonably technical reader, but use plain language.
+- Explain unfamiliar terms when they first appear.
+- Prefer short sentences and concrete examples.
+- Overdocument rather than underdocument. Add comments before code whose purpose may not be immediately obvious.
+- Function docstrings should explain what the function does, its arguments, its return value, and any behavior a reader needs to understand.
+- Comments should explain **why** a line or block exists, not merely repeat its syntax.
 
 ## Readability over correctness
 
