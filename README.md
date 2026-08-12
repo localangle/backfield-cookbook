@@ -1,40 +1,66 @@
 # Backfield Cookbook
 
-Tutorials that show how to use the [Backfield public API](https://docs.backfield.news) on real newsroom problems.
+Learn how to use the [Backfield API](https://docs.backfield.news) by working
+through practical newsroom examples.
 
-These are [marimo](https://marimo.io/) notebooks — reactive Python files, not a packaged SDK. You talk to the API with `httpx`.
+The tutorials use a sample of Guardian articles to explore questions such as:
 
-## Prerequisites
+- What stories mention Minnesota?
+- What people, organizations, and places appear in an article?
+- How can structured reporting data support new products and research?
 
-- Python 3.11+
-- A project API key for the demo (or your own) Backfield project
+Each tutorial is an interactive [marimo](https://marimo.io/) notebook. The
+Python is intentionally short and visible: you will see the HTTP requests,
+parameters, and responses rather than rely on a hidden SDK.
 
-## Setup
+## Get started
+
+You will need Python 3.11 or newer and a Backfield project API key.
+
+Create a virtual environment and install the notebook dependencies:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+```
+
+Copy the example environment file:
+
+```bash
 cp .env.example .env
 ```
 
-Edit `.env` and set `BACKFIELD_PROJECT_API_KEY`. The defaults point at the public demo:
+Open `.env` and add your API key:
 
 ```bash
-BACKFIELD_BASE_URL=https://api.demo.backfield.news
-BACKFIELD_PROJECT_SLUG=workbooks
-BACKFIELD_PROJECT_API_KEY=
+BACKFIELD_PROJECT_API_KEY=your-key-here
 ```
 
-## Run a tutorial
+Then launch the first tutorial:
 
 ```bash
 marimo edit tutorials/101_hello_backfield.py
 ```
 
-See [tutorials/README.md](tutorials/README.md) for the full list.
+Marimo will open the notebook in your browser. Run the cells from top to bottom,
+experiment with the queries, and change values to see how the results respond.
 
-## Tests
+## Tutorials
+
+Start with [101: Hello Backfield](tutorials/101_hello_backfield.py), which
+introduces authentication, project metadata, article search, and article
+details.
+
+See the [tutorial guide](tutorials/README.md) as more examples are added.
+
+## About this repository
+
+This is a collection of teaching notebooks, not a Python package or SDK. The
+tutorials call the public API directly with `httpx`, so the code can be adapted
+to a script, application, or another notebook.
+
+To verify that the notebooks load correctly:
 
 ```bash
 pytest
