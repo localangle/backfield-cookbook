@@ -6,4 +6,5 @@ __pycache__/
 .pytest_cache/
 .marimo/
 __marimo__/
+tutorials/html/
 *.pyc

@@ -112,6 +112,7 @@ def _(PROJECT_SLUG, get):
     source_path = f"/projects/{PROJECT_SLUG}/mentions/search"
     source_params = {
         "entity_type": "person",
+        "nature": "source",
         "has_canonical": True,
         "limit": PAGE_SIZE,
     }

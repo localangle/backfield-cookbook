@@ -1,0 +1,137 @@
+name: Publish rendered tutorials
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "tutorials/**/*.py"
+      - "requirements.txt"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install notebook dependencies
+        run: pip install -r requirements.txt
+
+      - name: Render tutorials
+        env:
+          BACKFIELD_PROJECT_API_KEY: ${{ secrets.BACKFIELD_PROJECT_API_KEY }}
+        run: |
+          mkdir -p tutorials/html
+          for notebook in tutorials/[0-9]*.py; do
+            name="$(basename "$notebook" .py)"
+            marimo export html "$notebook" \
+              --output "tutorials/html/${name}.html"
+          done
+
+      - name: Build tutorial index
+        run: |
+          python - <<'PY'
+          import html
+          import re
+          from pathlib import Path
+
+          links = []
+          for notebook in sorted(Path("tutorials").glob("[0-9]*.py")):
+              source = notebook.read_text(encoding="utf-8")
+              match = re.search(r"# Tutorial (\d+): ([^\n]+)", source)
+              number, title = match.groups() if match else ("", notebook.stem)
+              output = f"{notebook.stem}.html"
+              links.append(
+                  f'<li><a href="{html.escape(output)}">'
+                  f'<strong>{html.escape(number)}</strong> '
+                  f'{html.escape(title)}</a></li>'
+              )
+
+          page = f"""<!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="utf-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <title>Backfield Cookbook</title>
+              <style>
+                body {{
+                  color: #1f2328;
+                  font: 17px/1.6 system-ui, sans-serif;
+                  margin: 0 auto;
+                  max-width: 760px;
+                  padding: 48px 24px;
+                }}
+                h1 {{ line-height: 1.2; }}
+                ul {{ list-style: none; padding: 0; }}
+                li {{ border-top: 1px solid #d0d7de; }}
+                li:last-child {{ border-bottom: 1px solid #d0d7de; }}
+                a {{
+                  color: #0969da;
+                  display: block;
+                  padding: 16px 4px;
+                  text-decoration: none;
+                }}
+                a:hover {{ text-decoration: underline; }}
+                strong {{ display: inline-block; width: 42px; }}
+              </style>
+            </head>
+            <body>
+              <h1>Backfield Cookbook</h1>
+              <p>Rendered tutorials for the Backfield public API.</p>
+              <ul>{''.join(links)}</ul>
+            </body>
+          </html>
+          """
+          Path("tutorials/html/index.html").write_text(page, encoding="utf-8")
+          PY
+
+      - name: Confirm exports contain no API keys
+        run: |
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          key_pattern = re.compile(r"bfk_[A-Za-z0-9_-]{20,}")
+          offenders = [
+              str(path)
+              for path in Path("tutorials/html").glob("*.html")
+              if key_pattern.search(path.read_text(encoding="utf-8"))
+          ]
+          if offenders:
+              raise SystemExit(f"API key found in rendered output: {offenders}")
+          PY
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload rendered tutorials
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: tutorials/html
+
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
