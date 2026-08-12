@@ -272,7 +272,7 @@ def _(mo):
     - shade cells by distinct article count; and
     - interpret the result in light of how the dataset was collected.
 
-    A future tutorial can use the [geo-cell drill-down endpoint](https://docs.backfield.news/api/other/geo-cells/list-articles/) to retrieve the articles behind any selected hexagon.
+    **[Tutorial 202: Audit the people used as sources](./202_source_audit.py)** uses project-wide person mentions to rank sources and build a timeline for the most frequent one.
     """)
     return
 

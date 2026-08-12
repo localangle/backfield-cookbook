@@ -54,11 +54,12 @@ experiment with the queries, and change values to see how the results respond.
 |---|----------|-------------------|--------------|
 | 101 | [Hello Backfield](tutorials/101_hello_backfield.py) | Authentication, project metadata, article search and detail, entities, and mentions | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/101_hello_backfield.py) |
 
-### Basic Applications (2xx)
+### Simple Applications (2xx)
 
 | # | Notebook | What you'll learn | Try on molab |
 |---|----------|-------------------|--------------|
 | 201 | [Map coverage with H3 hexagons](tutorials/201_h3_coverage_map.py) | Request H3 coverage cells, shade them by article count, and interpret selection bias | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/201_h3_coverage_map.py) |
+| 202 | [Audit people used as sources](tutorials/202_source_audit.py) | Rank people by source mentions and build a commit-style timeline for the most frequent source | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/202_source_audit.py) |
 
 Work through the tutorials in order. Each one builds on the API calls and
 concepts introduced in the previous notebook.
