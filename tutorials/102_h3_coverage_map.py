@@ -103,7 +103,7 @@ def _(mo):
 
     We will use a bounding box around the contiguous United States.
 
-    H3 supports resolutions from 0 (very large hexagons) to 15 (very small hexagons). We will request **resolution 5**, where an average hexagon covers about 250 square kilometers. That is large enough to show national patterns while still separating many neighboring cities. See the [H3 resolution table](https://h3geo.org/docs/core-library/restable/) for other sizes.
+    H3 supports resolutions from 0 (very large hexagons) to 15 (very small hexagons). We will request **resolution 4**, where an average hexagon covers about 1,770 square kilometers. These large regional cells make broad national patterns easy to see. See the [H3 resolution table](https://h3geo.org/docs/core-library/restable/) for other sizes.
     """)
     return
 
@@ -113,8 +113,9 @@ def _():
     # West, south, east, and north edges of the contiguous United States.
     US_BBOX = "-125,24,-66.5,49.5"
 
-    # Resolution 5 produces relatively large, city-scale hexagons.
-    H3_RESOLUTION = 5
+    # Lower H3 resolutions produce larger hexagons. Resolution 4 works well
+    # for a map showing the entire contiguous United States.
+    H3_RESOLUTION = 4
     return H3_RESOLUTION, US_BBOX
 
 
@@ -168,7 +169,7 @@ def _(mo):
     mo.md(r"""
     ## Step 3: Turn counts into colors
 
-    We will shade low-count hexagons light blue and high-count hexagons dark blue.
+    We will shade low-count hexagons yellow and high-count hexagons red.
 
     A few cells have much larger counts than the rest. A logarithmic scale reduces that gap so cells with smaller counts remain visible. The underlying `article_count` does not change; only its display color does.
     """)
@@ -189,9 +190,9 @@ def _(cells, math):
             {
                 **_cell,
                 "fill_color": [
-                    int(225 - 175 * _strength),
-                    int(235 - 125 * _strength),
-                    int(255 - 35 * _strength),
+                    int(255 - 66 * _strength),
+                    int(237 - 237 * _strength),
+                    int(160 - 122 * _strength),
                     190,
                 ],
             }
@@ -206,7 +207,7 @@ def _(mo):
 
     [pydeck](https://deckgl.readthedocs.io/en/latest/) can draw H3 indexes directly with its `H3HexagonLayer`. We give it the cell index, the color calculated above, and the original article count for the hover tooltip.
 
-    Darker hexagons represent more articles. Hover over any hexagon to see its exact count.
+    Yellow hexagons have fewer articles, while darker red hexagons have more. Hover over any hexagon to see its exact count.
     """)
     return
 
