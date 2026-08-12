@@ -302,7 +302,7 @@ def _(mo):
 
     You can authenticate, search articles, retrieve full article details, and inspect the entities and mentions found in a story.
 
-    **[Tutorial 102: Map coverage with H3 hexagons](./102_h3_coverage_map.py)** uses article locations to build a national coverage map.
+    **[Tutorial 201: Map coverage with H3 hexagons](./201_h3_coverage_map.py)** uses article locations to build a national coverage map.
     """)
     return
 

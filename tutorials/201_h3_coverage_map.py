@@ -14,7 +14,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    # Tutorial 102: Map coverage with H3 hexagons
+    # Tutorial 201: Map coverage with H3 hexagons
 
     In [Tutorial 101](./101_hello_backfield.py), we searched articles and inspected the entities found in one story. Now we will use those location entities to build a U.S. coverage map.
 
