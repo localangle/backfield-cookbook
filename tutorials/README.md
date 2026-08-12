@@ -33,6 +33,7 @@ This opens the notebook in your browser. You can also paste a key into the passw
 
 | # | Notebook | What you'll learn |
 |---|----------|-------------------|
-| 101 | [Hello Backfield](101_hello_backfield.py) | Auth, project metadata, and a first article search |
+| 101 | [Hello Backfield](101_hello_backfield.py) | Authentication, project metadata, article search and detail, entities, and mentions |
+| 102 | [Map coverage with H3 hexagons](102_h3_coverage_map.py) | Build a national coverage map and interpret the effect of selection bias |
 
 Work through them in order — each builds on concepts from the previous one.

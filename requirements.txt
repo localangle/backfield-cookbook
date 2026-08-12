@@ -1,4 +1,5 @@
 httpx
 marimo
+pydeck
 pytest
 python-dotenv

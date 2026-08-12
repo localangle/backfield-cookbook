@@ -53,6 +53,7 @@ experiment with the queries, and change values to see how the results respond.
 | # | Notebook | What you'll learn | Try on molab |
 |---|----------|-------------------|--------------|
 | 101 | [Hello Backfield](tutorials/101_hello_backfield.py) | Authentication, project metadata, article search and detail, entities, and mentions | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/101_hello_backfield.py) |
+| 102 | [Map coverage with H3 hexagons](tutorials/102_h3_coverage_map.py) | Request H3 coverage cells, shade them by article count, and interpret selection bias | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/102_h3_coverage_map.py) |
 
 Work through the tutorials in order. Each one builds on the API calls and
 concepts introduced in the previous notebook.
