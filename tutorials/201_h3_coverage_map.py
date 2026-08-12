@@ -14,17 +14,11 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    # Tutorial 201: Map coverage with H3 hexagons
+    # Tutorial 201: Create a coverage map with Backfield and H3
 
-    In [Tutorial 101](./101_hello_backfield.py), we searched articles and inspected the entities found in one story. Now we will use those location entities to build a U.S. coverage map.
+    In [Tutorial 101](./101_hello_backfield.py), we logged into the API and performed some basic searches. Now we will use Backfield data to build a map of coverage across the U.S.
 
-    Backfield assigns an [H3 cell](https://h3geo.org/) to each geocoded location. H3 divides the world into hexagons, giving us a consistent way to group nearby locations and count the articles that mention them.
-
-    By the end of this tutorial, we will have a national map where:
-
-    - each hexagon represents an area of the country;
-    - darker hexagons represent more articles; and
-    - hovering over a hexagon shows its article count.
+    In addition to generating other geographic data, like points and polygons, Backfield assigns an [H3 cell](https://h3geo.org/) to each location it geocodes. H3 cells give us a consistent and visually friendly way to group nearby locations and count the articles that mention them.
     """)
     return
 
@@ -95,15 +89,17 @@ def _(mo):
     mo.md(r"""
     ## Step 1: Choose the map area and hexagon size
 
-    The [geo-cell coverage endpoint](https://docs.backfield.news/api/other/geo-cells/coverage/) requires a bounding box in this order:
+    For this tutorial, we will use Backfield's [geo-cell coverage endpoint](https://docs.backfield.news/api/other/geo-cells/coverage/), which is a shortcut for producing counts of articles whose locations fall within H3 cells at a given resolution.
+
+    The box takes the format:
 
     ```text
     minimum longitude, minimum latitude, maximum longitude, maximum latitude
     ```
 
-    We will use a bounding box around the contiguous United States.
+    We will set ours around the contiguous United States.
 
-    H3 supports resolutions from 0 (very large hexagons) to 15 (very small hexagons). We will request **resolution 4**, where an average hexagon covers about 1,770 square kilometers. These large regional cells make broad national patterns easy to see. See the [H3 resolution table](https://h3geo.org/docs/core-library/restable/) for other sizes.
+    H3 supports resolutions from 0 (very large hexagons) to 15 (very small hexagons). We will request **resolution 4**, where an average hexagon covers about 1,770 square kilometers. These large regional cells make broad national patterns easier to see. See the [H3 resolution table](https://h3geo.org/docs/core-library/restable/) for other sizes.
     """)
     return
 
@@ -144,7 +140,7 @@ def _(H3_RESOLUTION, PROJECT_SLUG, US_BBOX, get):
     print(f"Resolution returned: {coverage['resolution']}")
     print(f"Hexagons with coverage: {len(cells)}")
     print(f"Automatically coarsened: {coverage['coarsened']}")
-    return cells, coverage
+    return (cells,)
 
 
 @app.cell(hide_code=True)
@@ -167,7 +163,92 @@ def _(cells):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Step 3: Turn counts into colors
+    ## Step 3: Match the resolution to the geography
+
+    Not every location represents the same amount of physical space. Backfield's [`location_type` vocabulary](https://docs.backfield.news/api/taxonomy/entity-meta/locations/) includes:
+
+    - precise, point-like locations such as `address`, `place`, `intersection_road`, and `intersection_highway`;
+    - intermediate areas such as `neighborhood` and `political_district`; and
+    - broad areas such as `city`, `county`, `state`, and `country`.
+
+    The type helps describe a location, but Backfield uses the actual geometry's footprint to choose its **native H3 resolution**. A point can be stored at a fine resolution. A large city polygon needs a coarser resolution that better represents its size.
+
+    The [coverage endpoint's size gate](https://docs.backfield.news/api/other/geo-cells/coverage/#resolution-rollup-and-size-gate) uses that native resolution:
+
+    - Fine locations can roll up into larger display cells. An address can contribute to a city-sized hexagon.
+    - Broad locations are excluded from displays that are more precise than their footprint. A city should not appear to belong to one tiny neighborhood or block simply because its polygon has a center point.
+
+    Backfield does not fill every tiny hexagon covered by a city polygon. It assigns the location a representative cell at an appropriate native resolution, then includes or excludes it according to the map's display resolution.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ### Compare broad and precise locations
+
+    We can demonstrate the size gate by requesting two location types at two resolutions:
+
+    - Resolution 4 uses large regional hexagons.
+    - Resolution 8 uses hexagons smaller than one square kilometer, roughly a neighborhood-scale view.
+
+    The demo project does not contain enough addresses or intersections for a useful comparison, so we will compare `place` points with `city` polygons. The same principle applies to other precise and broad geography types.
+    """)
+    return
+
+
+@app.cell
+def _(PROJECT_SLUG, US_BBOX, get, mo):
+    _populated_cells = {}
+
+    # Use the same bounding box for every request so only the location type
+    # and display resolution change.
+    for _location_type in ("place", "city"):
+        for _resolution in (4, 8):
+            _result = get(
+                f"/projects/{PROJECT_SLUG}/articles/geo-cells",
+                bbox=US_BBOX,
+                resolution=_resolution,
+                location_type=_location_type,
+            )
+            _populated_cells[(_location_type, _resolution)] = len(
+                _result["cells"]
+            )
+
+    # A small table makes the effect of changing resolution easier to compare.
+    _rows = [
+        "| Location type | Resolution 4 | Resolution 8 |",
+        "|---|---:|---:|",
+        (
+            "| Place | "
+            f"{_populated_cells[('place', 4)]} cells | "
+            f"{_populated_cells[('place', 8)]} cells |"
+        ),
+        (
+            "| City | "
+            f"{_populated_cells[('city', 4)]} cells | "
+            f"{_populated_cells[('city', 8)]} cells |"
+        ),
+    ]
+    mo.md("\n".join(_rows))
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    Point-like `place` locations remain available at the finer resolution and spread into more distinct cells. Most city polygons disappear at resolution 8 because that display implies more precision than their geometry supports.
+
+    This behavior helps a zoomable map stay honest. As a reader zooms in, precise addresses and venues remain visible while broad city, state, and country references drop away.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Step 4: Turn counts into colors
 
     We will shade low-count hexagons yellow and high-count hexagons red.
 
@@ -203,7 +284,7 @@ def _(cells, math):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Step 4: Draw the national coverage map
+    ## Step 5: Draw the map
 
     [pydeck](https://deckgl.readthedocs.io/en/latest/) can draw H3 indexes directly with its `H3HexagonLayer`. We give it the cell index, the color calculated above, and the original article count for the hover tooltip.
 
@@ -247,32 +328,13 @@ def _(map_cells, pdk):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Step 5: Read the pattern carefully
+    ## Step 6: Interpreting the results
 
-    The map should show an unusually strong concentration around Minnesota. That is not evidence that the Guardian devoted this share of all its reporting to Minnesota.
+    Apart from the expected coverage density around the coasts, there is also an unusual concentration around Minnesota. This is not an accident. The subset of articles we used from the Guardian dataset is a list of 250 articles that contains the word "Minnesota".
 
-    It reflects how this demo dataset was built: we selected 250 articles whose text contained the word **“Minnesota.”** The map therefore visualizes the geography inside a deliberately Minnesota-focused sample.
+    Still, the map shows the wide breadth of even a small amount of coverage. Each hexagon represents an area being mentioned in an article, in any capacity. It might refer to a sports team, a politician, or even a small and seemingly insignificant anecdote.
 
-    Coverage elsewhere on the map is still meaningful. Those cells represent other places mentioned in the same stories—for example, opposing sports teams, national political figures, travel, or comparisons with other cities. But every conclusion must account for the rule used to select the source articles.
-
-    This is a useful general lesson for data products: a polished map can faithfully represent its input while the input itself remains selective.
-    """)
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    ## Next steps
-
-    You now know how to:
-
-    - request H3 coverage cells for a geographic area;
-    - choose a display resolution;
-    - shade cells by distinct article count; and
-    - interpret the result in light of how the dataset was collected.
-
-    **[Tutorial 202: Audit the people used as sources](./202_source_audit.py)** uses project-wide person mentions to rank sources and build a timeline for the most frequent one.
+    One thing we've noticed working with metro and regional publishers is that often their coverage touches on a broader swath of their community than they might expect. If a crime victim is from a given neighborhood, we might not learn that until several paragraphs deep into the article — but to their friends and neighbors, that's still news.
     """)
     return
 
