@@ -186,6 +186,91 @@ def _(PROJECT_SLUG, get, items):
     # Show only the opening 500 characters so the full story does not take
     # over the notebook output.
     print(article["text"][:500])
+    return (article_id,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Entities in an article
+
+    Backfield identifies the people, organizations, and locations mentioned in each article. Each entity type has its own endpoint:
+
+    - [`/people`](https://docs.backfield.news/api/articles/hub/people/) includes details such as a person's title and affiliation.
+    - [`/organizations`](https://docs.backfield.news/api/articles/hub/organizations/) includes the type of organization.
+    - [`/locations`](https://docs.backfield.news/api/articles/hub/locations/) includes map-friendly addresses and geometry when available.
+
+    These endpoints are useful when an application needs one particular type of entity.
+    """)
+    return
+
+
+@app.cell
+def _(PROJECT_SLUG, article_id, get):
+    # Entity-specific endpoints use the same article id as the detail endpoint.
+    people = get(f"/projects/{PROJECT_SLUG}/articles/{article_id}/people", limit=5)
+    organizations = get(
+        f"/projects/{PROJECT_SLUG}/articles/{article_id}/organizations",
+        limit=5,
+    )
+    locations = get(
+        f"/projects/{PROJECT_SLUG}/articles/{article_id}/locations",
+        limit=5,
+    )
+
+    # Each response is paginated. For this introduction, we print the labels
+    # from only the first page of each entity type.
+    # Leading underscores keep these temporary loop variables local to this
+    # cell, which prevents name collisions with variables in other cells.
+    for _heading, _entity_response in (
+        ("People", people),
+        ("Organizations", organizations),
+        ("Locations", locations),
+    ):
+        print(
+            f"\n{_heading} "
+            f"({_entity_response['pagination']['total']} total)"
+        )
+        for _entity in _entity_response["items"]:
+            print(f"- {_entity['label']}")
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Mentions and evidence
+
+    An entity is the person, organization, or place itself. A **mention** describes how that entity appears in a particular article.
+
+    The [`/mentions`](https://docs.backfield.news/api/articles/hub/mentions/) endpoint combines all three entity types into one list. Each mention has a [`nature`](https://docs.backfield.news/api/taxonomy/mention-meta/) describing the entity's role in this particular story. The available natures depend on the entity type.
+
+    A mention may also include an evidence span. Its `mention_text` points back to the relevant text in the article.
+
+    Use this unified endpoint when you want to answer a question such as “What entities appear in this story?” without making separate requests for each type.
+    """)
+    return
+
+
+@app.cell
+def _(PROJECT_SLUG, article_id, get):
+    mentions = get(f"/projects/{PROJECT_SLUG}/articles/{article_id}/mentions")
+
+    print(f"{len(mentions)} mentions")
+    # Keep the example compact even when an article contains many mentions.
+    for _mention in mentions[:10]:
+        _nature = _mention["nature"] or "not set"
+        _evidence = _mention["evidence"]
+
+        print(
+            f"- {_mention['entity_type']}: {_mention['label']} "
+            f"(nature: {_nature})"
+        )
+
+        # Evidence can be absent when Backfield has no saved text span for a
+        # mention. When present, mention_text is the source text to highlight.
+        if _evidence:
+            print(f"  Text: {_evidence['mention_text']}")
     return
 
 
@@ -225,9 +310,9 @@ def _(mo):
     mo.md(r"""
     ## Next steps
 
-    You can authenticate, read project stats, and search articles.
+    You can authenticate, search articles, retrieve full article details, and inspect the entities and mentions found in a story.
 
-    **Tutorial 102** (not written yet) will take one article id and walk through its mentions, people, organizations, and locations.
+    Future tutorials will build on these calls to search across the whole project and explore canonical entities shared by many articles.
     """)
     return
 

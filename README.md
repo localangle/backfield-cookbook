@@ -48,12 +48,14 @@ experiment with the queries, and change values to see how the results respond.
 
 ## Tutorials
 
-- **[101: Hello Backfield](tutorials/101_hello_backfield.py)** — Learn how to
-  authenticate, inspect project metadata, search for articles, and retrieve one
-  article's full details.  
-  [Open 101 in molab](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/101_hello_backfield.py)
+### Basics (1xx)
 
-See the [tutorial guide](tutorials/README.md) as more examples are added.
+| # | Notebook | What you'll learn | Try on molab |
+|---|----------|-------------------|--------------|
+| 101 | [Hello Backfield](tutorials/101_hello_backfield.py) | Authentication, project metadata, article search and detail, entities, and mentions | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/101_hello_backfield.py) |
+
+Work through the tutorials in order. Each one builds on the API calls and
+concepts introduced in the previous notebook.
 
 ## About this repository
 
