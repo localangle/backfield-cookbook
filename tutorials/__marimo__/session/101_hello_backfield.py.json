@@ -51,7 +51,7 @@
         {
           "type": "data",
           "data": {
-            "text/html": "<marimo-ui-element object-id='bkHC-0' random-id='1fd3a220-59b2-b12f-6584-e7585f59964f'><marimo-text data-initial-value='&quot;&quot;' data-label='&quot;&#92;u003cspan class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&#92;u003e&#92;u003cspan class=&#92;&quot;paragraph&#92;&quot;&#92;u003ePaste your Backfield project API key&#92;u003c/span&#92;u003e&#92;u003c/span&#92;u003e&quot;' data-placeholder='&quot;&quot;' data-kind='&quot;password&quot;' data-full-width='false' data-disabled='false' data-debounce='true'></marimo-text></marimo-ui-element>"
+            "text/html": "<marimo-ui-element object-id='bkHC-0' random-id='abbff4b0-2a34-c3b7-8d32-223c6d862a59'><marimo-text data-initial-value='&quot;&quot;' data-label='&quot;&#92;u003cspan class=&#92;&quot;markdown prose dark:prose-invert contents&#92;&quot;&#92;u003e&#92;u003cspan class=&#92;&quot;paragraph&#92;&quot;&#92;u003ePaste your Backfield project API key&#92;u003c/span&#92;u003e&#92;u003c/span&#92;u003e&quot;' data-placeholder='&quot;&quot;' data-kind='&quot;password&quot;' data-full-width='false' data-disabled='false' data-debounce='true'></marimo-text></marimo-ui-element>"
           }
         }
       ],
@@ -138,12 +138,12 @@
     },
     {
       "id": "RGSE",
-      "code_hash": "c2eaca5a12ba65cdc3dfc76c77a5686b",
+      "code_hash": "7039f5bb4bad9f318812685f3d7630e0",
       "outputs": [
         {
           "type": "data",
           "data": {
-            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"inspect-one-hit\">Inspect one hit</h2></span>"
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"article-detail\">Article detail</h2>\n<span class=\"paragraph\">Search hits are summaries. <code>GET /public/v1/projects/{slug}/articles/{id}</code> returns one article.</span>\n<span class=\"paragraph\">Pass <code>include=text</code> to get the full body (without it you only get <code>preview</code>).</span></span>"
           }
         }
       ],
@@ -151,9 +151,23 @@
     },
     {
       "id": "Kclp",
-      "code_hash": "0fd45bdcc75fe7ab891a8564d4d58d02",
-      "outputs": [],
-      "console": []
+      "code_hash": "1a6a00fa91fafaebc52c91a71a36570b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "How Adrian Heath hopes to make Minnesota United the Newcastle of MLS\n2017-02-28\nhttps://www.theguardian.com/football/blog/2017/feb/28/minnesota-united-mls-new-team-adrian-heath\nIn his first press conference the Minnesota United head coach, Adrian Heath, referred to his team as the \u201cNewcastle of MLS,\u201d as well as expressing his desire to find players who specifically wanted to play for the Loons. Now that he\u2019s been in the job for a few months, Heath is able to see how that may play to his side\u2019s benefit as they approach their first ever game in MLS, a meeting with the 2015 champions, Portland Timbers, on Friday night. \u201cThey\u2019re some of those places that are out of the way\n",
+          "mimetype": "text/plain"
+        }
+      ]
     },
     {
       "id": "emfo",
@@ -171,8 +185,22 @@
     {
       "id": "Hstk",
       "code_hash": "c59dd84dc38beedfc7ac667627337b66",
-      "outputs": [],
-      "console": []
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "RateLimit-Limit: 600\nRateLimit-Remaining: 596\nRateLimit-Reset: 18\nX-Request-ID: afa55ec8-60b8-4c84-9ecf-358d15114b27\n",
+          "mimetype": "text/plain"
+        }
+      ]
     },
     {
       "id": "nWHF",
