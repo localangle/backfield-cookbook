@@ -192,7 +192,7 @@ def _(PROJECT_SLUG, get, items):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Entities in an article
+    ## Get entities from an article
 
     Backfield identifies the people, organizations, and locations mentioned in each article. Each entity type has its own endpoint:
 
@@ -243,9 +243,7 @@ def _(mo):
 
     An entity is the person, organization, or place itself. A **mention** describes how that entity appears in a particular article.
 
-    The [`/mentions`](https://docs.backfield.news/api/articles/hub/mentions/) endpoint combines all three entity types into one list. Each mention has a [`nature`](https://docs.backfield.news/api/taxonomy/mention-meta/) describing the entity's role in this particular story. The available natures depend on the entity type.
-
-    A mention may also include an evidence span. Its `mention_text` points back to the relevant text in the article.
+    The [`/mentions`](https://docs.backfield.news/api/articles/hub/mentions/) endpoint combines all three entity types into one list. A mention may include its role in the story and an evidence span pointing back to the source text.
 
     Use this unified endpoint when you want to answer a question such as “What entities appear in this story?” without making separate requests for each type.
     """)
@@ -258,19 +256,11 @@ def _(PROJECT_SLUG, article_id, get):
 
     print(f"{len(mentions)} mentions")
     # Keep the example compact even when an article contains many mentions.
-    for _mention in mentions[:10]:
-        _nature = _mention["nature"] or "not set"
-        _evidence = _mention["evidence"]
-
-        print(
-            f"- {_mention['entity_type']}: {_mention['label']} "
-            f"(nature: {_nature})"
-        )
-
-        # Evidence can be absent when Backfield has no saved text span for a
-        # mention. When present, mention_text is the source text to highlight.
-        if _evidence:
-            print(f"  Text: {_evidence['mention_text']}")
+    for mention in mentions[:10]:
+        print(f"- {mention['entity_type']}: {mention['label']}")
+        print('Nature: ' + mention['nature'])
+        print(mention['evidence']['mention_text'])
+        print('\n')
     return
 
 
