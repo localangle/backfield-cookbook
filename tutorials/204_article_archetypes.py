@@ -298,12 +298,9 @@ def _(mo):
     Try changing one clause and observe how the sample changes. The metadata discovery routes documented under [Article Meta](https://docs.backfield.news/api/taxonomy/article-meta/#discover-values-in-your-project) show which types and categories are available in a project.
 
     From here, these archetypes could become saved editorial definitions, recurring coverage reports, or dimensions in an analytics dashboard.
+
+    When you are ready for Custom Extract, continue with [Tutorial 301: Backfield Cooking](./301_backfield_cooking.py).
     """)
-    return
-
-
-@app.cell
-def _():
     return
 
 
