@@ -54,6 +54,7 @@ Marimo will open the notebook in your browser. Run the cells from top to bottom,
 |---|----------|-------------------|----------|--------------|
 | 201 | [Build a coverage map](tutorials/201_h3_coverage_map.py) | Build a simple coverage map using shaded H3 cells. | [View rendered](https://localangle.github.io/backfield-cookbook/201_h3_coverage_map.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/201_h3_coverage_map.py) |
 | 202 | [Explore who appears in coverage](tutorials/202_source_audit.py) | List people, filter by mention nature, and chart one person's mentions over time. | [View rendered](https://localangle.github.io/backfield-cookbook/202_source_audit.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/202_source_audit.py) |
+| 203 | [Build a Minneapolis news feed](tutorials/203_minneapolis_news_feed.py) | Combine keyword, geographic, and entity queries into a deduplicated local feed. | [View rendered](https://localangle.github.io/backfield-cookbook/203_minneapolis_news_feed.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/203_minneapolis_news_feed.py) |
 
 There is no need to work through the tutorials in order. You can find API documentation [here](https://docs.backfield.news/api/). 
 
