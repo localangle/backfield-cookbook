@@ -16,13 +16,11 @@ def _(mo):
     mo.md(r"""
     # Tutorial 202: Explore who appears in coverage
 
-    Newsrooms often want to understand which people appear in their coverage. We will build that understanding in three stages:
+    Newsrooms often want to understand the people who appear in their coverage, along with who is quoted and under what circumstances. We will build that understanding across our small article set in three stages:
 
     1. List the people mentioned across the project.
     2. Use mention **natures** to distinguish featured people from background context.
     3. Draw a GitHub-style contribution timeline for one frequently featured person.
-
-    Starting with the complete list makes the effect of filtering easier to see.
     """)
     return
 
@@ -89,9 +87,9 @@ def _(api_key, mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Step 1: List people
+    ## Step 1: Create a list of people
 
-    The project-wide [`/mentions/search`](https://docs.backfield.news/api/mentions/search/) endpoint can return every person mention in the project.
+    The project-wide [`/mentions/search`](https://docs.backfield.news/api/mentions/search/) endpoint can return every mention of a person that appears in a project.
 
     We will request:
 
@@ -99,7 +97,7 @@ def _(mo):
     - `has_canonical=true` so repeated mentions can be grouped under one canonical person; and
     - `limit=100`, the largest available page size.
 
-    We are deliberately not filtering by role yet. The response is [paginated](https://docs.backfield.news/api/conventions/pagination/), so we continue requesting pages until every person mention is loaded.
+    The response is [paginated](https://docs.backfield.news/api/conventions/pagination/), so we continue requesting pages until every person mention is loaded.
     """)
     return
 
@@ -131,14 +129,16 @@ def _(PROJECT_SLUG, get):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Step 2: Count every mention
+    ## Step 2: Count the mentions
 
-    Each result includes a `canonical` person with a stable id and display label. We use that id to combine references to the same person, then count:
+    Mentions correspond to a passage, or multiple passages, that feature a person in an article. Via the Stylebook, those mentions are assigned to `canonical` person objects, each of whom have a stable ID and a display label.
+
+    We use that id to combine references to the same person, then count:
 
     - **mentions** — the number of mention rows; and
     - **stories** — the number of distinct articles containing those mentions.
 
-    At this stage, every role counts. Someone who is only background context will appear alongside sources, subjects, experts, and other featured people.
+    We won't filter by nature this stage. We're trying to grab every mention of a person, regardless of their relationship to each story.
     """)
     return
 
@@ -200,11 +200,9 @@ def _(mo):
     mo.md(r"""
     ## Step 3: Use natures to focus the list
 
-    A mention's [`nature`](https://docs.backfield.news/api/taxonomy/mention-meta/people/) describes the person's role in that story. For example, a person might be a `source`, `subject`, `expert`, `official`, or `context`.
+    A mention's [`nature`](https://docs.backfield.news/api/taxonomy/mention-meta/people/) describes a person's role relative to that part of the story. For example, a person might be a `source`, `subject`, `expert`, `official`, or `context`.
 
-    The `context` nature is useful when reading an individual article, but it can add noise to an audit of who the coverage features. We will remove only `context` mentions and keep every other nature.
-
-    The search endpoint can include selected natures, but it does not provide a "not context" query. Filtering the complete results in Python makes that rule explicit.
+    The `context` nature typically refers to passing mentions — situations where a person might be mentioned but is not actually central to the events described within an article. We can exclude it to get a slightly better picture of people who appear in more prominent roles.
     """)
     return
 
@@ -237,7 +235,9 @@ def _(featured_people, mo):
     mo.md(f"""
     ## Step 4: Follow {featured_people[0]['label']} over time
 
-    After removing `context` mentions, **{featured_people[0]['label']}** is the most frequently featured person, with **{featured_people[0]['mentions']} mentions** across **{featured_people[0]['stories']} stories**.
+    Given that the Guardian covers the United States from a national perspective, it is no surprise to see that Donald Trump is at the top of the list. We could use other nature filters, as well as selecting only mentions that feature quotes, if we wanted to perform a more detailed source audit.
+
+    For now, though, let's explore mentions of Trump over time.
 
     The [person mentions endpoint](https://docs.backfield.news/api/people/mentions/) returns every article associated with one canonical person. We will load that complete history and apply the same `nature != "context"` rule.
     """)
@@ -274,7 +274,7 @@ def _(mo):
     mo.md(r"""
     ## Step 5: Draw a GitHub-style mention timeline
 
-    GitHub's contribution calendar uses one square per day. Darker greens indicate more activity. We can use the same pattern for mentions:
+    Maybe we want to visualize Trump's mentions over time. Let's try using a Github-style calendar view, which represents days as squares. Darker greens indicate more activity. We can use the same pattern for mentions:
 
     - each square represents one publication date;
     - darker squares represent more mentions; and
@@ -396,16 +396,13 @@ def _(mo, top_person, top_person_mentions):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## Step 6: Understand the limits of this audit
+    ## Step 6: Understand the results
 
-    This ranking is useful, but it is not a complete measure of prominence, sourcing quality, or diversity.
+    Again, remember that our small dataset here only reflects Guardian articles with the word "Minnesota" in them, to keep the size manageable.
 
-    - The first ranking counts every person mention; the focused ranking excludes only `context`.
-    - It includes only mentions linked to canonical people, because stable ids are needed to group the same person.
-    - It reflects this demo's deliberately Minnesota-focused article sample, not all Guardian coverage.
-    - The calendar counts mentions by article publication date. Mentions without a publication date cannot appear on it.
+    But a similar process with a more complete set of data can show when people fade into and out of the news cycle, as well as providing a more comprehensive view on the voices an organization decides to platform.
 
-    Treat the audit as a starting point for editorial questions, not as a final verdict.
+    Treat an audit like this as a starting point for editorial questions, not as a final verdict.
     """)
     return
 
