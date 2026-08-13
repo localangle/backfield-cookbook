@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-SECRET_KEY_RE = re.compile(r"bfk_[A-Za-z0-9_-]{20,}")
+SECRET_KEY_RE = re.compile(r"(?:bfk_[A-Za-z0-9_-]{20,}|sk-(?:proj-)?[A-Za-z0-9_-]{20,})")
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TUTORIALS = sorted(REPO_ROOT.glob("tutorials/*.py"))
@@ -61,4 +61,4 @@ def test_committed_tree_has_no_api_keys() -> None:
             continue
         if SECRET_KEY_RE.search(text):
             offenders.append(str(path.relative_to(REPO_ROOT)))
-    assert offenders == [], f"committed files contain bfk_ secrets: {offenders}"
+    assert offenders == [], f"committed files contain API secrets: {offenders}"

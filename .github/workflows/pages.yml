@@ -43,6 +43,7 @@ jobs:
       - name: Render tutorials
         env:
           BACKFIELD_PROJECT_API_KEY: ${{ secrets.BACKFIELD_PROJECT_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           mkdir -p tutorials/html
           for notebook in tutorials/[0-9]*.py; do
@@ -114,7 +115,9 @@ jobs:
           import re
           from pathlib import Path
 
-          key_pattern = re.compile(r"bfk_[A-Za-z0-9_-]{20,}")
+          key_pattern = re.compile(
+              r"(?:bfk_[A-Za-z0-9_-]{20,}|sk-(?:proj-)?[A-Za-z0-9_-]{20,})"
+          )
           offenders = [
               str(path)
               for path in Path("tutorials/html").glob("*.html")

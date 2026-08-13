@@ -552,6 +552,10 @@ def _(feed_entries, mo, openai_api_key):
     import os as _os
 
     import httpx as _httpx
+    from dotenv import load_dotenv as _load_dotenv
+
+    # Support CI exports and local `.env` files without pasting a key.
+    _load_dotenv()
 
     OPENAI_MODEL = "gpt-5.6-terra"
     RERANK_LIMIT = 25
