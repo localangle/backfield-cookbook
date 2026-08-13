@@ -780,12 +780,9 @@ def _(mo):
     We now have the basic shape of a geographically personalized feed: broad recall from several query types, careful geographic constraints, editorially selected entities, and article-level deduplication.
 
     Try changing the bounding box, local location types, or canonical entities for another community. The [article search](https://docs.backfield.news/api/articles/search/), [geographic search](https://docs.backfield.news/api/articles/geo-search/), and [entity endpoints](https://docs.backfield.news/api/entities/) provide the building blocks.
+
+    **[Tutorial 204: Create article archetypes](./204_article_archetypes.py)** combines article metadata into more specific editorial definitions.
     """)
-    return
-
-
-@app.cell
-def _():
     return
 
 
