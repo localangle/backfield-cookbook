@@ -420,6 +420,8 @@ def _(mo):
     - [List and search articles](https://docs.backfield.news/api/articles/search/)
     - [List custom records](https://docs.backfield.news/api/articles/hub/custom-records/)
     - [Article Meta](https://docs.backfield.news/api/taxonomy/article-meta/)
+
+    Continue with [Tutorial 302: Build an entity knowledge graph](./302_entity_knowledge_graph.py) to explore political people and the organizations and locations directly connected to them.
     """)
     return
 

@@ -57,11 +57,12 @@ Marimo will open the notebook in your browser. Run the cells from top to bottom,
 | 203 | [Build a Minneapolis news feed](tutorials/203_minneapolis_news_feed.py) | Combine keyword, geographic, and entity queries into a deduplicated local feed. | [View rendered](https://localangle.github.io/backfield-cookbook/203_minneapolis_news_feed.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/203_minneapolis_news_feed.py) |
 | 204 | [Create article archetypes](tutorials/204_article_archetypes.py) | Combine article metadata into editorially meaningful coverage archetypes. | [View rendered](https://localangle.github.io/backfield-cookbook/204_article_archetypes.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/204_article_archetypes.py) |
 
-### Custom Extract apps (3xx)
+### Advanced applications (3xx)
 
 | # | Notebook | What you'll learn | Rendered | Try on molab |
 |---|----------|-------------------|----------|--------------|
 | 301 | [Backfield Cooking](tutorials/301_backfield_cooking.py) | Load recipe custom records and browse locally by meal or ingredient. | [View rendered](https://localangle.github.io/backfield-cookbook/301_backfield_cooking.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/301_backfield_cooking.py) |
+| 302 | [Build an entity knowledge graph](tutorials/302_entity_knowledge_graph.py) | Explore political people and the organizations and locations directly connected to them. | [View rendered](https://localangle.github.io/backfield-cookbook/302_entity_knowledge_graph.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/302_entity_knowledge_graph.py) |
 
 There is no need to work through the tutorials in order. You can find API documentation [here](https://docs.backfield.news/api/). 
 

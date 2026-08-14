@@ -1,6 +1,8 @@
 httpx
 ipython
 marimo
+networkx
 pydeck
+pyvis
 pytest
 python-dotenv
