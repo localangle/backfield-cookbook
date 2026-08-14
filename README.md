@@ -5,7 +5,7 @@ Learn how to use the [Backfield API](https://docs.backfield.news) by working thr
 Most tutorials are based on a a [sample of articles from the Guardian](https://www.kaggle.com/datasets/adityakharosekar2/guardian-news-articles) from between 2017 and 2022, which were released on the platform Kaggle for data science research.
 
 Each tutorial is presented in an interactive [marimo](https://marimo.io/) notebook.
-You can read the rendered versions without an API key, or open the notebooks in
+You can view the fully rendered versions without an API key, or open the notebooks in
 molab when you want to edit and run them yourself.
 
 ## Get started
@@ -46,25 +46,25 @@ Marimo will open the notebook in your browser. Run the cells from top to bottom,
 
 | # | Notebook | What you'll learn | Rendered | Try on molab |
 |---|----------|-------------------|----------|--------------|
-| 101 | [Hello Backfield](tutorials/101_hello_backfield.py) | Authentication, project metadata, article search and detail, entities, and mentions | [View rendered](https://localangle.github.io/backfield-cookbook/101_hello_backfield.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/101_hello_backfield.py) |
+| 101 | [Hello Backfield](tutorials/101_hello_backfield.py) | The basics: Authentication, project metadata, article search and detail, entities, and mentions | [View rendered](https://localangle.github.io/backfield-cookbook/101_hello_backfield.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/101_hello_backfield.py) |
 
 ### Simple Applications (2xx)
 
 | # | Notebook | What you'll learn | Rendered | Try on molab |
 |---|----------|-------------------|----------|--------------|
 | 201 | [Build a coverage map](tutorials/201_h3_coverage_map.py) | Build a simple coverage map using shaded H3 cells. | [View rendered](https://localangle.github.io/backfield-cookbook/201_h3_coverage_map.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/201_h3_coverage_map.py) |
-| 202 | [Explore who appears in coverage](tutorials/202_source_audit.py) | List people, filter by mention nature, and chart one person's mentions over time. | [View rendered](https://localangle.github.io/backfield-cookbook/202_source_audit.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/202_source_audit.py) |
-| 203 | [Build a Minneapolis news feed](tutorials/203_minneapolis_news_feed.py) | Combine keyword, geographic, and entity queries into a deduplicated local feed. | [View rendered](https://localangle.github.io/backfield-cookbook/203_minneapolis_news_feed.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/203_minneapolis_news_feed.py) |
-| 204 | [Create article archetypes](tutorials/204_article_archetypes.py) | Combine article metadata into editorially meaningful coverage archetypes. | [View rendered](https://localangle.github.io/backfield-cookbook/204_article_archetypes.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/204_article_archetypes.py) |
+| 202 | [Explore who appears in coverage](tutorials/202_source_audit.py) | Conduct a basic source audit. | [View rendered](https://localangle.github.io/backfield-cookbook/202_source_audit.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/202_source_audit.py) |
+| 203 | [Build a local news feed](tutorials/203_minneapolis_news_feed.py) | Combine keywords, geography, and entities into a tailored local news feed. | [View rendered](https://localangle.github.io/backfield-cookbook/203_minneapolis_news_feed.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/203_minneapolis_news_feed.py) |
+| 204 | [Define article archetypes](tutorials/204_article_archetypes.py) | Combine article metadata into editorially meaningful coverage archetypes, which can be used for analysis. | [View rendered](https://localangle.github.io/backfield-cookbook/204_article_archetypes.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/204_article_archetypes.py) |
 
 ### Advanced applications (3xx)
 
 | # | Notebook | What you'll learn | Rendered | Try on molab |
 |---|----------|-------------------|----------|--------------|
-| 301 | [Backfield Cooking](tutorials/301_backfield_cooking.py) | Load recipe custom records and browse locally by meal or ingredient. | [View rendered](https://localangle.github.io/backfield-cookbook/301_backfield_cooking.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/301_backfield_cooking.py) |
+| 301 | ["Backfield Cooking"](tutorials/301_backfield_cooking.py) | Turn narrative recipes into a structured, searchable app. | [View rendered](https://localangle.github.io/backfield-cookbook/301_backfield_cooking.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/301_backfield_cooking.py) |
 | 302 | [Build an entity knowledge graph](tutorials/302_entity_knowledge_graph.py) | Explore political people and the organizations and locations directly connected to them. | [View rendered](https://localangle.github.io/backfield-cookbook/302_entity_knowledge_graph.html) | [![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/localangle/backfield-cookbook/blob/main/tutorials/302_entity_knowledge_graph.py) |
 
-There is no need to work through the tutorials in order. You can find API documentation [here](https://docs.backfield.news/api/). 
+No need to work through the tutorials in order. You can find API documentation [here](https://docs.backfield.news/api/). 
 
 ## About this repository
 
